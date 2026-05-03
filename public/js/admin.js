@@ -19,7 +19,7 @@ async function init() {
 async function loadRegistrations() {
   const { data, error } = await db
     .from('profiles')
-    .select('first_name, last_name, phone, church, location, support_preference, considerations, created_at')
+    .select('id, first_name, last_name, phone, church, location, support_preference, considerations, role, created_at')
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -37,7 +37,7 @@ function renderTable(rows) {
   const tbody = document.getElementById('reg-tbody');
 
   if (rows.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:2rem;">No registrations found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#94a3b8;padding:2rem;">No registrations found.</td></tr>';
     return;
   }
 
@@ -50,9 +50,35 @@ function renderTable(rows) {
       <td><span class="badge badge-blue">${esc(r.location || '—')}</span></td>
       <td>${esc(r.support_preference || '—')}</td>
       <td>${esc(r.considerations    || '—')}</td>
+      <td>
+        <select class="role-select" data-id="${esc(r.id)}" onchange="changeRole(this)">
+          <option value="volunteer"     ${r.role === 'volunteer'     ? 'selected' : ''}>Volunteer</option>
+          <option value="project_lead"  ${r.role === 'project_lead'  ? 'selected' : ''}>Project Lead</option>
+          <option value="city_lead"     ${r.role === 'city_lead'     ? 'selected' : ''}>City Lead</option>
+          <option value="admin"         ${r.role === 'admin'         ? 'selected' : ''}>Admin</option>
+        </select>
+      </td>
       <td>${new Date(r.created_at).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })}</td>
     </tr>
   `).join('');
+}
+
+async function changeRole(select) {
+  const id      = select.dataset.id;
+  const newRole = select.value;
+  select.disabled = true;
+
+  const { error } = await db
+    .from('profiles')
+    .update({ role: newRole })
+    .eq('id', id);
+
+  select.disabled = false;
+
+  if (error) {
+    alert('Could not update role: ' + error.message);
+    await loadRegistrations();
+  }
 }
 
 function esc(str) {
@@ -89,7 +115,7 @@ function applyFilters() {
 function exportCSV() {
   const rows = getFiltered();
 
-  const headers = ['First Name', 'Last Name', 'Phone', 'Church', 'Location', 'Support Preference', 'Considerations', 'Registered On'];
+  const headers = ['First Name', 'Last Name', 'Phone', 'Church', 'Location', 'Support Preference', 'Considerations', 'Role', 'Registered On'];
   const lines = [
     headers.join(','),
     ...rows.map(r => [
@@ -100,6 +126,7 @@ function exportCSV() {
       `"${r.location          || ''}"`,
       `"${r.support_preference|| ''}"`,
       `"${r.considerations    || ''}"`,
+      `"${r.role              || 'volunteer'}"`,
       `"${new Date(r.created_at).toLocaleDateString()}"`,
     ].join(','))
   ];

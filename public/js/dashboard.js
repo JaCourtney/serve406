@@ -38,7 +38,9 @@ async function init() {
     document.getElementById('verify-banner').style.display = 'block';
   }
 
-  if (profile.is_admin) {
+  document.getElementById('val-role').textContent = formatRole(profile.role || 'volunteer');
+
+  if (profile.role === 'admin') {
     document.getElementById('admin-link').style.display = 'block';
   }
 
@@ -50,5 +52,9 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
   await db.auth.signOut();
   window.location.href = 'index.html';
 });
+
+function formatRole(role) {
+  return { volunteer: 'Volunteer', project_lead: 'Project Lead', city_lead: 'City Lead', admin: 'Admin' }[role] || role;
+}
 
 init();

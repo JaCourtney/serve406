@@ -93,6 +93,19 @@
     }
 
     tbody td:first-child { font-weight: 500; color: var(--navy); }
+
+    .role-select {
+      width: auto;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: var(--navy);
+      cursor: pointer;
+    }
+
+    .role-select:disabled { opacity: 0.5; cursor: wait; }
   </style>
 </head>
 <body>
@@ -145,6 +158,7 @@
             <th>Location</th>
             <th>Support Preference</th>
             <th>Considerations</th>
+            <th>Role</th>
             <th>Registered</th>
           </tr>
         </thead>
