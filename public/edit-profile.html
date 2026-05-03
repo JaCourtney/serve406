@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serve406 — Edit Profile</title>
+  <link rel="icon" href="https://serve406.org/wp-content/uploads/2025/02/4-1-300x300.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .name-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 480px) {
+      .name-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html">
+        <img class="nav-logo" src="https://serve406.org/wp-content/uploads/2025/02/4.png" alt="Serve406 logo" />
+      </a>
+      <span id="nav-email" class="nav-email"></span>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Edit Your Profile</h2>
+
+      <div id="alert" class="alert" style="display:none;"></div>
+
+      <form id="edit-form" novalidate>
+
+        <div class="name-row">
+          <div class="form-group">
+            <label for="first-name">First Name <span style="color:#dc2626">*</span></label>
+            <input type="text" id="first-name" required />
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name <span style="color:#dc2626">*</span></label>
+            <input type="text" id="last-name" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" disabled style="opacity:0.55;cursor:not-allowed;" />
+          <small style="color:#94a3b8;font-size:0.78rem;margin-top:0.25rem;display:block;">Email cannot be changed here.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="(406) 555-0100" />
+        </div>
+
+        <div class="form-group">
+          <label for="church">Church <span style="color:#dc2626">*</span></label>
+          <input type="text" id="church" required />
+        </div>
+
+        <div class="form-group">
+          <label for="area">Area Preference <span style="color:#dc2626">*</span></label>
+          <select id="area" required>
+            <option value="" disabled>Select an area…</option>
+            <option value="North">North</option>
+            <option value="South">South</option>
+            <option value="East">East</option>
+            <option value="West">West</option>
+            <option value="Central">Central / Downtown</option>
+          </select>
+        </div>
+
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <button type="submit" id="submit-btn" class="btn btn-primary" style="flex:1;">Save Changes</button>
+          <a href="dashboard.html" style="flex:1;">
+            <button type="button" class="btn btn-light" style="width:100%;">Cancel</button>
+          </a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/edit-profile.js"></script>
+</body>
+</html>
