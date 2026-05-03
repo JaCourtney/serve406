@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serve406 — Sign In</title>
+  <link rel="icon" href="https://serve406.org/wp-content/uploads/2025/02/4-1-300x300.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="form-header">
+    <a href="index.html">
+      <img src="https://serve406.org/wp-content/uploads/2025/02/4.png" alt="Serve406 logo" />
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h2>Sign in to your account</h2>
+
+      <div id="alert" class="alert" style="display:none;"></div>
+
+      <form id="login-form" novalidate>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="jane@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Your password" required />
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn btn-primary">Sign In</button>
+      </form>
+
+      <p class="link-text">Don't have an account? <a href="register.html">Register here</a></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

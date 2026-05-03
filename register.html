@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serve406 — Register</title>
+  <link rel="icon" href="https://serve406.org/wp-content/uploads/2025/02/4-1-300x300.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="form-header">
+    <a href="index.html">
+      <img src="https://serve406.org/wp-content/uploads/2025/02/4.png" alt="Serve406 logo" />
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h2>Create your volunteer account</h2>
+
+      <div id="alert" class="alert" style="display:none;"></div>
+
+      <form id="register-form" novalidate>
+
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Jane Smith" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="jane@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="(406) 555-0100" />
+        </div>
+
+        <div class="form-group">
+          <label for="area">Area Preference</label>
+          <select id="area" required>
+            <option value="" disabled selected>Select an area…</option>
+            <option value="North">North</option>
+            <option value="South">South</option>
+            <option value="East">East</option>
+            <option value="West">West</option>
+            <option value="Central">Central / Downtown</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="At least 6 characters" required />
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" placeholder="Repeat your password" required />
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn btn-primary">Create Account</button>
+      </form>
+
+      <p class="link-text">Already have an account? <a href="login.html">Sign in</a></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>
