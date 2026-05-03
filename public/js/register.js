@@ -30,8 +30,6 @@ form.addEventListener('submit', async (e) => {
   const locationSelect    = document.getElementById('location');
   const location          = locationSelect.value;
   const cityId            = locationSelect.options[locationSelect.selectedIndex]?.dataset.id;
-  const supportPreference = document.getElementById('support-preference').value;
-  const considerations    = document.getElementById('considerations').value;
 
   if (!firstName || !lastName) {
     showAlert('Please enter your first and last name.', 'error');
@@ -76,8 +74,6 @@ form.addEventListener('submit', async (e) => {
       church,
       location,
       city_id:            cityId,
-      support_preference: supportPreference,
-      considerations,
     });
 
   if (profileError) {

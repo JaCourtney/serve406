@@ -115,7 +115,7 @@ function applyFilters() {
 function exportCSV() {
   const rows = getFiltered();
 
-  const headers = ['First Name', 'Last Name', 'Phone', 'Church', 'Location', 'Support Preference', 'Considerations', 'Role', 'Registered On'];
+  const headers = ['First Name', 'Last Name', 'Phone', 'Church', 'Location', 'Opportunity Type', 'Considerations', 'Role', 'Registered On'];
   const lines = [
     headers.join(','),
     ...rows.map(r => [
