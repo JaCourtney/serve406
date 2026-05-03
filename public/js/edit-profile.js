@@ -1,3 +1,19 @@
+async function loadCities(selectedCityId) {
+  const { data, error } = await db.from('cities').select('id, name').order('name');
+  const select = document.getElementById('location');
+  select.innerHTML = '<option value="" disabled>Select a location…</option>';
+  if (!error && data) {
+    data.forEach(city => {
+      const opt = document.createElement('option');
+      opt.value = city.name;
+      opt.dataset.id = city.id;
+      opt.textContent = city.name;
+      if (city.id === selectedCityId) opt.selected = true;
+      select.appendChild(opt);
+    });
+  }
+}
+
 async function init() {
   const { data: { session } } = await db.auth.getSession();
 
@@ -25,7 +41,7 @@ async function init() {
   document.getElementById('phone').value       = profile.phone     || '';
   document.getElementById('church').value      = profile.church    || '';
 
-  if (profile.location)           document.getElementById('location').value           = profile.location;
+  await loadCities(profile.city_id);
   if (profile.support_preference) document.getElementById('support-preference').value = profile.support_preference;
   if (profile.considerations)     document.getElementById('considerations').value     = profile.considerations;
 }
@@ -38,7 +54,9 @@ document.getElementById('edit-form').addEventListener('submit', async (e) => {
   const lastName          = document.getElementById('last-name').value.trim();
   const phone             = document.getElementById('phone').value.trim();
   const church            = document.getElementById('church').value.trim();
-  const location          = document.getElementById('location').value;
+  const locationSelect    = document.getElementById('location');
+  const location          = locationSelect.value;
+  const cityId            = locationSelect.options[locationSelect.selectedIndex]?.dataset.id;
   const supportPreference = document.getElementById('support-preference').value;
   const considerations    = document.getElementById('considerations').value;
 
@@ -65,6 +83,7 @@ document.getElementById('edit-form').addEventListener('submit', async (e) => {
       phone,
       church,
       location,
+      city_id:            cityId,
       support_preference: supportPreference,
       considerations,
     })

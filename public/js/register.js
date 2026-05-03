@@ -1,6 +1,21 @@
 const form = document.getElementById('register-form');
 const alertBox = document.getElementById('alert');
 
+async function loadCities() {
+  const { data, error } = await db.from('cities').select('id, name').order('name');
+  const select = document.getElementById('location');
+  select.innerHTML = '<option value="" disabled selected>Select a location…</option>';
+  if (!error && data) {
+    data.forEach(city => {
+      const opt = document.createElement('option');
+      opt.value = city.name;
+      opt.dataset.id = city.id;
+      opt.textContent = city.name;
+      select.appendChild(opt);
+    });
+  }
+}
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearAlert();
@@ -12,7 +27,9 @@ form.addEventListener('submit', async (e) => {
   const confirm           = document.getElementById('confirm-password').value;
   const phone             = document.getElementById('phone').value.trim();
   const church            = document.getElementById('church').value.trim();
-  const location          = document.getElementById('location').value;
+  const locationSelect    = document.getElementById('location');
+  const location          = locationSelect.value;
+  const cityId            = locationSelect.options[locationSelect.selectedIndex]?.dataset.id;
   const supportPreference = document.getElementById('support-preference').value;
   const considerations    = document.getElementById('considerations').value;
 
@@ -58,6 +75,7 @@ form.addEventListener('submit', async (e) => {
       phone,
       church,
       location,
+      city_id:            cityId,
       support_preference: supportPreference,
       considerations,
     });
@@ -81,6 +99,8 @@ function clearAlert() {
   alertBox.style.display = 'none';
   alertBox.textContent = '';
 }
+
+loadCities();
 
 function setLoading(loading) {
   const btn = document.getElementById('submit-btn');
