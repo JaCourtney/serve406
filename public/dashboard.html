@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serve406 — My Registration</title>
+  <link rel="icon" href="https://serve406.org/wp-content/uploads/2025/02/4-1-300x300.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html">
+        <img class="nav-logo" src="https://serve406.org/wp-content/uploads/2025/02/4.png" alt="Serve406 logo" />
+      </a>
+      <span id="nav-email" class="nav-email"></span>
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+
+    <div id="verify-banner" class="alert alert-info" style="display:none; margin-top:1.5rem;">
+      Please check your email and click the confirmation link to fully activate your account.
+    </div>
+
+    <div id="loading" style="color:#64748b; padding: 2rem 0;">Loading your registration…</div>
+
+    <div id="content" style="display:none; margin-top:1.5rem;">
+
+      <p class="section-title">Your Registration</p>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="label">Full Name</div>
+          <div class="value" id="val-name"></div>
+        </div>
+        <div class="info-item">
+          <div class="label">Email</div>
+          <div class="value" id="val-email"></div>
+        </div>
+        <div class="info-item">
+          <div class="label">Phone</div>
+          <div class="value" id="val-phone"></div>
+        </div>
+        <div class="info-item">
+          <div class="label">Area Preference</div>
+          <div class="value">
+            <span class="badge badge-blue" id="val-area"></span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="label">Registered On</div>
+          <div class="value" id="val-joined"></div>
+        </div>
+      </div>
+
+      <button id="logout-btn" class="btn btn-danger" style="max-width:200px;">Sign Out</button>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
