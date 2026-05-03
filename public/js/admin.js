@@ -19,7 +19,7 @@ async function init() {
 async function loadRegistrations() {
   const { data, error } = await db
     .from('profiles')
-    .select('first_name, last_name, phone, church, area_preference, created_at, id')
+    .select('first_name, last_name, phone, church, location, support_preference, considerations, created_at')
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -37,7 +37,7 @@ function renderTable(rows) {
   const tbody = document.getElementById('reg-tbody');
 
   if (rows.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem;">No registrations found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:2rem;">No registrations found.</td></tr>';
     return;
   }
 
@@ -47,7 +47,9 @@ function renderTable(rows) {
       <td>${esc(r.last_name  || '—')}</td>
       <td>${esc(r.phone      || '—')}</td>
       <td>${esc(r.church     || '—')}</td>
-      <td><span class="badge badge-blue">${esc(r.area_preference || '—')}</span></td>
+      <td><span class="badge badge-blue">${esc(r.location || '—')}</span></td>
+      <td>${esc(r.support_preference || '—')}</td>
+      <td>${esc(r.considerations    || '—')}</td>
       <td>${new Date(r.created_at).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })}</td>
     </tr>
   `).join('');
@@ -61,8 +63,8 @@ function esc(str) {
 }
 
 function getFiltered() {
-  const search = document.getElementById('search').value.toLowerCase();
-  const area   = document.getElementById('area-filter').value;
+  const search   = document.getElementById('search').value.toLowerCase();
+  const location = document.getElementById('location-filter').value;
 
   return window.allRows.filter(r => {
     const matchSearch = !search ||
@@ -70,8 +72,8 @@ function getFiltered() {
       (r.last_name  || '').toLowerCase().includes(search) ||
       (r.church     || '').toLowerCase().includes(search) ||
       (r.phone      || '').toLowerCase().includes(search);
-    const matchArea = !area || r.area_preference === area;
-    return matchSearch && matchArea;
+    const matchLocation = !location || r.location === location;
+    return matchSearch && matchLocation;
   });
 }
 
@@ -87,15 +89,17 @@ function applyFilters() {
 function exportCSV() {
   const rows = getFiltered();
 
-  const headers = ['First Name', 'Last Name', 'Phone', 'Church', 'Area Preference', 'Registered On'];
+  const headers = ['First Name', 'Last Name', 'Phone', 'Church', 'Location', 'Support Preference', 'Considerations', 'Registered On'];
   const lines = [
     headers.join(','),
     ...rows.map(r => [
-      `"${r.first_name || ''}"`,
-      `"${r.last_name  || ''}"`,
-      `"${r.phone      || ''}"`,
-      `"${r.church     || ''}"`,
-      `"${r.area_preference || ''}"`,
+      `"${r.first_name        || ''}"`,
+      `"${r.last_name         || ''}"`,
+      `"${r.phone             || ''}"`,
+      `"${r.church            || ''}"`,
+      `"${r.location          || ''}"`,
+      `"${r.support_preference|| ''}"`,
+      `"${r.considerations    || ''}"`,
       `"${new Date(r.created_at).toLocaleDateString()}"`,
     ].join(','))
   ];
@@ -110,7 +114,7 @@ function exportCSV() {
 }
 
 document.getElementById('search').addEventListener('input', applyFilters);
-document.getElementById('area-filter').addEventListener('change', applyFilters);
+document.getElementById('location-filter').addEventListener('change', applyFilters);
 document.getElementById('export-btn').addEventListener('click', exportCSV);
 document.getElementById('logout-btn').addEventListener('click', async () => {
   await db.auth.signOut();

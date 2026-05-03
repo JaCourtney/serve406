@@ -25,34 +25,31 @@ async function init() {
   document.getElementById('phone').value       = profile.phone     || '';
   document.getElementById('church').value      = profile.church    || '';
 
-  const areaSelect = document.getElementById('area');
-  if (profile.area_preference) {
-    areaSelect.value = profile.area_preference;
-  }
+  if (profile.location)           document.getElementById('location').value           = profile.location;
+  if (profile.support_preference) document.getElementById('support-preference').value = profile.support_preference;
+  if (profile.considerations)     document.getElementById('considerations').value     = profile.considerations;
 }
 
 document.getElementById('edit-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   clearAlert();
 
-  const firstName = document.getElementById('first-name').value.trim();
-  const lastName  = document.getElementById('last-name').value.trim();
-  const phone     = document.getElementById('phone').value.trim();
-  const church    = document.getElementById('church').value.trim();
-  const area      = document.getElementById('area').value;
+  const firstName         = document.getElementById('first-name').value.trim();
+  const lastName          = document.getElementById('last-name').value.trim();
+  const phone             = document.getElementById('phone').value.trim();
+  const church            = document.getElementById('church').value.trim();
+  const location          = document.getElementById('location').value;
+  const supportPreference = document.getElementById('support-preference').value;
+  const considerations    = document.getElementById('considerations').value;
 
   if (!firstName || !lastName) {
     showAlert('Please enter your first and last name.', 'error');
     return;
   }
 
-  if (!church) {
-    showAlert('Please enter your church name.', 'error');
-    return;
-  }
 
-  if (!area) {
-    showAlert('Please select an area preference.', 'error');
+  if (!location) {
+    showAlert('Please select a location.', 'error');
     return;
   }
 
@@ -62,7 +59,15 @@ document.getElementById('edit-form').addEventListener('submit', async (e) => {
 
   const { error } = await db
     .from('profiles')
-    .update({ first_name: firstName, last_name: lastName, phone, church, area_preference: area })
+    .update({
+      first_name:         firstName,
+      last_name:          lastName,
+      phone,
+      church,
+      location,
+      support_preference: supportPreference,
+      considerations,
+    })
     .eq('id', session.user.id);
 
   if (error) {

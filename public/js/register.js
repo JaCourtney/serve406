@@ -5,27 +5,25 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearAlert();
 
-  const firstName = document.getElementById('first-name').value.trim();
-  const lastName  = document.getElementById('last-name').value.trim();
-  const email     = document.getElementById('email').value.trim();
-  const password  = document.getElementById('password').value;
-  const confirm   = document.getElementById('confirm-password').value;
-  const phone     = document.getElementById('phone').value.trim();
-  const church    = document.getElementById('church').value.trim();
-  const area      = document.getElementById('area').value;
+  const firstName         = document.getElementById('first-name').value.trim();
+  const lastName          = document.getElementById('last-name').value.trim();
+  const email             = document.getElementById('email').value.trim();
+  const password          = document.getElementById('password').value;
+  const confirm           = document.getElementById('confirm-password').value;
+  const phone             = document.getElementById('phone').value.trim();
+  const church            = document.getElementById('church').value.trim();
+  const location          = document.getElementById('location').value;
+  const supportPreference = document.getElementById('support-preference').value;
+  const considerations    = document.getElementById('considerations').value;
 
   if (!firstName || !lastName) {
     showAlert('Please enter your first and last name.', 'error');
     return;
   }
 
-  if (!church) {
-    showAlert('Please enter your church name.', 'error');
-    return;
-  }
 
-  if (!area) {
-    showAlert('Please select an area preference.', 'error');
+  if (!location) {
+    showAlert('Please select a location.', 'error');
     return;
   }
 
@@ -53,7 +51,16 @@ form.addEventListener('submit', async (e) => {
 
   const { error: profileError } = await db
     .from('profiles')
-    .insert({ id: userId, first_name: firstName, last_name: lastName, phone, church, area_preference: area });
+    .insert({
+      id: userId,
+      first_name:         firstName,
+      last_name:          lastName,
+      phone,
+      church,
+      location,
+      support_preference: supportPreference,
+      considerations,
+    });
 
   if (profileError) {
     showAlert('Account created but profile save failed: ' + profileError.message, 'error');

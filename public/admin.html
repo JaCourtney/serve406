@@ -120,14 +120,11 @@
     </div>
 
     <div class="admin-toolbar">
-      <input type="text" id="search" placeholder="Search by name or phone…" />
-      <select id="area-filter">
-        <option value="">All Areas</option>
-        <option value="North">North</option>
-        <option value="South">South</option>
-        <option value="East">East</option>
-        <option value="West">West</option>
-        <option value="Central">Central / Downtown</option>
+      <input type="text" id="search" placeholder="Search by name, church, or phone…" />
+      <select id="location-filter">
+        <option value="">All Locations</option>
+        <option value="Missoula">Missoula</option>
+        <option value="The Bitterroot">The Bitterroot</option>
       </select>
       <button id="export-btn" class="btn btn-primary">Export CSV</button>
     </div>
@@ -145,7 +142,9 @@
             <th>Last Name</th>
             <th>Phone</th>
             <th>Church</th>
-            <th>Area</th>
+            <th>Location</th>
+            <th>Support Preference</th>
+            <th>Considerations</th>
             <th>Registered</th>
           </tr>
         </thead>
