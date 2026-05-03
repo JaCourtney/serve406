@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serve406 — Welcome!</title>
+  <link rel="icon" href="https://serve406.org/wp-content/uploads/2025/02/4-1-300x300.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .thankyou-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      text-align: center;
+      background: var(--navy);
+      background-image: url('https://serve406.org/wp-content/uploads/2025/02/RAS_1466.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .thankyou-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 21, 46, 0.75);
+    }
+
+    .thankyou-content {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+    }
+
+    .thankyou-logo {
+      height: 80px;
+      width: auto;
+      margin-bottom: 2rem;
+    }
+
+    .thankyou-content h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .thankyou-content p {
+      color: rgba(255,255,255,0.85);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .thankyou-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .thankyou-buttons .btn {
+      width: 100%;
+      max-width: 320px;
+      padding: 14px 28px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="thankyou-wrap">
+    <div class="thankyou-overlay"></div>
+    <div class="thankyou-content">
+
+      <img
+        class="thankyou-logo"
+        src="https://serve406.org/wp-content/uploads/2025/02/4.png"
+        alt="Serve406 logo"
+      />
+
+      <h1>You're In — Welcome to the Team!</h1>
+
+      <p>
+        Thank you for signing up to serve Montana. Your registration is confirmed
+        and we're grateful to have you with us. Together, we'll make a real
+        difference in our communities.
+      </p>
+
+      <div class="thankyou-buttons">
+        <a href="login.html" style="width:100%;max-width:320px;">
+          <button class="btn btn-primary">Sign In to My Account</button>
+        </a>
+        <a href="register.html" style="width:100%;max-width:320px;">
+          <button class="btn btn-outline">Register Another Volunteer</button>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

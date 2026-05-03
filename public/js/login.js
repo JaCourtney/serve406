@@ -1,3 +1,9 @@
+async function checkSession() {
+  const { data: { session } } = await db.auth.getSession();
+  if (session) window.location.href = 'dashboard.html';
+}
+checkSession();
+
 const form = document.getElementById('login-form');
 const alertBox = document.getElementById('alert');
 

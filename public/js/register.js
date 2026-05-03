@@ -44,12 +44,7 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
-  showAlert(
-    'Registration successful! You can now sign in.',
-    'success'
-  );
-  form.reset();
-  setLoading(false);
+  window.location.href = 'thankyou.html';
 });
 
 function showAlert(message, type) {
