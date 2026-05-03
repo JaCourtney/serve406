@@ -34,6 +34,10 @@ async function init() {
     document.getElementById('verify-banner').style.display = 'block';
   }
 
+  if (profile.is_admin) {
+    document.getElementById('admin-link').style.display = 'block';
+  }
+
   document.getElementById('content').style.display = 'block';
   document.getElementById('loading').style.display = 'none';
 }
