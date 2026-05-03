@@ -6,6 +6,16 @@
   <title>Serve406 — Register</title>
   <link rel="icon" href="https://serve406.org/wp-content/uploads/2025/02/4-1-300x300.png" />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .name-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 480px) {
+      .name-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -23,13 +33,19 @@
 
       <form id="register-form" novalidate>
 
-        <div class="form-group">
-          <label for="name">Full Name</label>
-          <input type="text" id="name" placeholder="Jane Smith" required />
+        <div class="name-row">
+          <div class="form-group">
+            <label for="first-name">First Name <span style="color:#dc2626">*</span></label>
+            <input type="text" id="first-name" placeholder="Jane" required />
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name <span style="color:#dc2626">*</span></label>
+            <input type="text" id="last-name" placeholder="Smith" required />
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="email">Email Address</label>
+          <label for="email">Email Address <span style="color:#dc2626">*</span></label>
           <input type="email" id="email" placeholder="jane@example.com" required />
         </div>
 
@@ -39,7 +55,12 @@
         </div>
 
         <div class="form-group">
-          <label for="area">Area Preference</label>
+          <label for="church">Church <span style="color:#dc2626">*</span></label>
+          <input type="text" id="church" placeholder="e.g. Cornerstone Church" required />
+        </div>
+
+        <div class="form-group">
+          <label for="area">Area Preference <span style="color:#dc2626">*</span></label>
           <select id="area" required>
             <option value="" disabled selected>Select an area…</option>
             <option value="North">North</option>
@@ -51,12 +72,12 @@
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Password <span style="color:#dc2626">*</span></label>
           <input type="password" id="password" placeholder="At least 6 characters" required />
         </div>
 
         <div class="form-group">
-          <label for="confirm-password">Confirm Password</label>
+          <label for="confirm-password">Confirm Password <span style="color:#dc2626">*</span></label>
           <input type="password" id="confirm-password" placeholder="Repeat your password" required />
         </div>
 

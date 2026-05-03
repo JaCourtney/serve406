@@ -5,12 +5,29 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearAlert();
 
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-  const confirm = document.getElementById('confirm-password').value;
-  const phone = document.getElementById('phone').value.trim();
-  const area = document.getElementById('area').value;
+  const firstName = document.getElementById('first-name').value.trim();
+  const lastName  = document.getElementById('last-name').value.trim();
+  const email     = document.getElementById('email').value.trim();
+  const password  = document.getElementById('password').value;
+  const confirm   = document.getElementById('confirm-password').value;
+  const phone     = document.getElementById('phone').value.trim();
+  const church    = document.getElementById('church').value.trim();
+  const area      = document.getElementById('area').value;
+
+  if (!firstName || !lastName) {
+    showAlert('Please enter your first and last name.', 'error');
+    return;
+  }
+
+  if (!church) {
+    showAlert('Please enter your church name.', 'error');
+    return;
+  }
+
+  if (!area) {
+    showAlert('Please select an area preference.', 'error');
+    return;
+  }
 
   if (password !== confirm) {
     showAlert('Passwords do not match.', 'error');
@@ -36,7 +53,7 @@ form.addEventListener('submit', async (e) => {
 
   const { error: profileError } = await db
     .from('profiles')
-    .insert({ id: userId, name, phone, area_preference: area });
+    .insert({ id: userId, first_name: firstName, last_name: lastName, phone, church, area_preference: area });
 
   if (profileError) {
     showAlert('Account created but profile save failed: ' + profileError.message, 'error');

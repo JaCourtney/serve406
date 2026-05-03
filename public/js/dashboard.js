@@ -22,11 +22,13 @@ async function init() {
     return;
   }
 
-  document.getElementById('val-name').textContent = profile.name;
-  document.getElementById('val-email').textContent = user.email;
-  document.getElementById('val-phone').textContent = profile.phone || '—';
-  document.getElementById('val-area').textContent = profile.area_preference || '—';
-  document.getElementById('val-joined').textContent = new Date(profile.created_at).toLocaleDateString(
+  document.getElementById('val-first-name').textContent = profile.first_name || '—';
+  document.getElementById('val-last-name').textContent  = profile.last_name  || '—';
+  document.getElementById('val-email').textContent      = user.email;
+  document.getElementById('val-phone').textContent      = profile.phone  || '—';
+  document.getElementById('val-church').textContent     = profile.church || '—';
+  document.getElementById('val-area').textContent       = profile.area_preference || '—';
+  document.getElementById('val-joined').textContent     = new Date(profile.created_at).toLocaleDateString(
     'en-US', { year: 'numeric', month: 'long', day: 'numeric' }
   );
 

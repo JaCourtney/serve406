@@ -19,7 +19,7 @@ async function init() {
 async function loadRegistrations() {
   const { data, error } = await db
     .from('profiles')
-    .select('name, phone, area_preference, created_at, id')
+    .select('first_name, last_name, phone, church, area_preference, created_at, id')
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -27,10 +27,6 @@ async function loadRegistrations() {
       '<p style="color:#dc2626">Could not load registrations: ' + error.message + '</p>';
     return;
   }
-
-  const { data: users } = await db.auth.admin?.listUsers
-    ? { data: null }
-    : { data: null };
 
   window.allRows = data;
   renderTable(data);
@@ -41,14 +37,16 @@ function renderTable(rows) {
   const tbody = document.getElementById('reg-tbody');
 
   if (rows.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:2rem;">No registrations found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem;">No registrations found.</td></tr>';
     return;
   }
 
   tbody.innerHTML = rows.map(r => `
     <tr>
-      <td>${esc(r.name)}</td>
-      <td>${esc(r.phone || '—')}</td>
+      <td>${esc(r.first_name || '—')}</td>
+      <td>${esc(r.last_name  || '—')}</td>
+      <td>${esc(r.phone      || '—')}</td>
+      <td>${esc(r.church     || '—')}</td>
       <td><span class="badge badge-blue">${esc(r.area_preference || '—')}</span></td>
       <td>${new Date(r.created_at).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })}</td>
     </tr>
@@ -62,18 +60,23 @@ function esc(str) {
     .replace(/>/g, '&gt;');
 }
 
-function applyFilters() {
+function getFiltered() {
   const search = document.getElementById('search').value.toLowerCase();
   const area   = document.getElementById('area-filter').value;
 
-  const filtered = window.allRows.filter(r => {
+  return window.allRows.filter(r => {
     const matchSearch = !search ||
-      r.name.toLowerCase().includes(search) ||
-      (r.phone || '').toLowerCase().includes(search);
+      (r.first_name || '').toLowerCase().includes(search) ||
+      (r.last_name  || '').toLowerCase().includes(search) ||
+      (r.church     || '').toLowerCase().includes(search) ||
+      (r.phone      || '').toLowerCase().includes(search);
     const matchArea = !area || r.area_preference === area;
     return matchSearch && matchArea;
   });
+}
 
+function applyFilters() {
+  const filtered = getFiltered();
   renderTable(filtered);
   document.getElementById('filtered-count').textContent =
     filtered.length !== window.allRows.length
@@ -82,23 +85,16 @@ function applyFilters() {
 }
 
 function exportCSV() {
-  const search = document.getElementById('search').value.toLowerCase();
-  const area   = document.getElementById('area-filter').value;
+  const rows = getFiltered();
 
-  const rows = window.allRows.filter(r => {
-    const matchSearch = !search ||
-      r.name.toLowerCase().includes(search) ||
-      (r.phone || '').toLowerCase().includes(search);
-    const matchArea = !area || r.area_preference === area;
-    return matchSearch && matchArea;
-  });
-
-  const headers = ['Name', 'Phone', 'Area Preference', 'Registered On'];
+  const headers = ['First Name', 'Last Name', 'Phone', 'Church', 'Area Preference', 'Registered On'];
   const lines = [
     headers.join(','),
     ...rows.map(r => [
-      `"${r.name}"`,
-      `"${r.phone || ''}"`,
+      `"${r.first_name || ''}"`,
+      `"${r.last_name  || ''}"`,
+      `"${r.phone      || ''}"`,
+      `"${r.church     || ''}"`,
       `"${r.area_preference || ''}"`,
       `"${new Date(r.created_at).toLocaleDateString()}"`,
     ].join(','))
